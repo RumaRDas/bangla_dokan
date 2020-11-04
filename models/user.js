@@ -45,6 +45,7 @@ userSchema.virtual('password')
 .get(function() {
     return this._password
 })
+
 userSchema.methods = {
     encryptPassword = function(password){
         if(!password) return '';
