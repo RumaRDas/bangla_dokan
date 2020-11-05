@@ -48,3 +48,6 @@ return res.json({token, user: {_id, email, name, role}});
 });
 };
 
+exports.signout=(req, res)=>{
+    
+}
