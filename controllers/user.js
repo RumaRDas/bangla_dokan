@@ -30,9 +30,16 @@ if(err || !user){
        err: "User with  that email does not exist. Please sign up"
    })
 }
-// if user is found make sure the email and assword match
+// if user is found make sure the email and password match
 // create authenticate method in user model 
 //generate a signed token with user id and secret
-})
+const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET);
+//persist the token as 't' incookie with expiry date
+res.cookie('t', token , { expire: new Date()+9999});
+//return response with user and token to frontend client
+const {_id, name, email,role} = user
+return res.json({token, user: {_id, email, name, role}});
+
+});
 };
 
