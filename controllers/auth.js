@@ -56,6 +56,7 @@ exports.requireSignin = expressJwt({
   userProperty: "auth",
 });
 
+//Middleware for user signup authentication"
 exports.isAuth = (req, res, next) => {
   let user = req.profile && req.auth && req.profile._id == req.auth._id;
   if (!user) {
@@ -66,6 +67,7 @@ exports.isAuth = (req, res, next) => {
   next();
 };
 
+// Middleware for admin login"
 exports.isAdmin = (req, res, next) => {
   if (req.profile.role === 0) {
     return res.status(403).json({
