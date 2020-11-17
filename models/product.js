@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
-const crypto = require("crypto");
-const { v1: uuidv1 } = require("uuid");
+const { ObjectId } = mongoose.Schems;
 
 const productSchema = new mongoose.Schema(
   {
@@ -9,6 +8,33 @@ const productSchema = new mongoose.Schema(
       trim: true,
       required: true,
       maxlength: 32,
+    },
+    description: {
+      type: String,
+      trim: true,
+      maxlength: 2000,
+    },
+    price: {
+      type: Number,
+      trim: true,
+      required: true,
+      maxlength: 32,
+    },
+    category: {
+      type: ObjectId,
+      ref: "Category",
+      required: true,
+    },
+    quantity: {
+      type: Number,
+    },
+    photo: {
+      data: Buffer,
+      contentType: String,
+    },
+    shipping: {
+      required: false,
+      type: Boolean,
     },
   },
   { timestamps: true }
