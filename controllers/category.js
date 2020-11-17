@@ -55,4 +55,13 @@ exports.remove = (req, res) => {
     });
   });
 };
-exports.list = (req, res) => {};
+exports.list = (req, res) => {
+  Category.find().exec((err, data) => {
+    if (err) {
+      return res.status(400).json({
+        errror: errorHandler(err),
+      });
+    }
+    res.json(data);
+  });
+};
