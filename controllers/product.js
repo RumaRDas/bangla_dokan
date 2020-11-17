@@ -16,6 +16,21 @@ exports.create = (req, res) => {
       });
     }
 
+    //check for product all fields
+    const { name, description, price, category, quantity, shipping } = fields;
+
+    if (
+      !name ||
+      !description ||
+      !price ||
+      !category ||
+      !quantity ||
+      !shipping
+    ) {
+      return res.status(400).json({
+        error: "All fields are required",
+      });
+    }
     let product = new Product(fields);
 
     //uploading photo data and file type in database
