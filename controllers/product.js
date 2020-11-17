@@ -20,6 +20,15 @@ exports.create = (req, res) => {
 
     //uploading photo data and file type in database
     if (files.photo) {
+      //console.log("FILES PHOTO: ", files.photo);
+
+      //Restricting to upload file size more then 1mb
+
+      if (files.photo.size > 1000000) {
+        return res.status(400).json({
+          error: "Image should be less than 1mb in size",
+        });
+      }
       product.photo.data = fs.readFileSync(files.photo.path);
       product.photo.contentType = files.photo.type;
     }
