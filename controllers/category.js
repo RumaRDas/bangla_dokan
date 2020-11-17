@@ -28,3 +28,20 @@ exports.create = (req, res) => {
     res.json({ data });
   });
 };
+
+exports.update = (req, res) => {};
+
+exports.remove = (req, res) => {
+  let category = req.category;
+  category.remove((err, deletedCategory) => {
+    if (err) {
+      return res.status(400).json({
+        errror: errorHandler(err),
+      });
+    }
+    res.json({
+      message: "Category deleted successfuly ",
+    });
+  });
+};
+exports.list = (req, res) => {};
