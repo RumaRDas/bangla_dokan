@@ -10,7 +10,7 @@ exports.signup = (req, res) => {
   user.save((err, user) => {
     if (err) {
       return res.status(400).json({
-        err: errorHandler(err),
+        error: errorHandler(err),
       });
     }
     user.salt = undefined;
@@ -20,6 +20,7 @@ exports.signup = (req, res) => {
     });
   });
 };
+
 exports.signin = (req, res) => {
   //find the user based on email
   const { email, password } = req.body;
