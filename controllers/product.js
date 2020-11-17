@@ -17,6 +17,11 @@ exports.productById = (req, res, next, id) => {
   });
 };
 
+// getting product by id getting all fields nt photo fields
+exports.read = (req, res) => {
+  req.product.photo = undefined;
+  res.json(req.product);
+};
 //creating /saving new product in database
 exports.create = (req, res) => {
   let form = new formidable.IncomingForm();
