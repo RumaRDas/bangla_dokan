@@ -29,11 +29,22 @@ exports.create = (req, res) => {
   });
 };
 
-exports.update = (req, res) => {};
+exports.update = (req, res) => {
+  const category = req.category;
+  category.name = req.body.name;
+  category.save((err, data) => {
+    if (err) {
+      return res.status(400).json({
+        error: errorHandler(err),
+      });
+    }
+    res.json(data);
+  });
+};
 
 exports.remove = (req, res) => {
-  let category = req.category;
-  category.remove((err, deletedCategory) => {
+  const category = req.category;
+  category.remove((err, data) => {
     if (err) {
       return res.status(400).json({
         errror: errorHandler(err),
