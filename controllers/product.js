@@ -150,3 +150,11 @@ exports.update = (req, res) => {
     });
   });
 };
+
+/**
+ * sell / arrival
+ * Return product by
+ * by sell = /products?sortBy=sold&order=desc&limit=6
+ * by arrival = /products?sortBy=createdAt&order=desc&limit=6
+ * if no params are sent, then all products are returned
+ */

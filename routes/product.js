@@ -8,6 +8,7 @@ const {
   read,
   remove,
   update,
+  list,
 } = require("../controllers/product");
 
 const { requireSignin, isAuth, isAdmin } = require("../controllers/auth.js");
@@ -30,6 +31,9 @@ router.put(
   isAdmin,
   update
 );
+
+router.get("/products/", list);
+
 router.param("userId", userById);
 router.param("productId", productById);
 
