@@ -1,22 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../core/Layout";
 import { API } from "../config";
 
 const Signup = () => {
+  const [values, setValues] = useState({
+    name: "",
+    email: "",
+    password: "",
+    error: "",
+    success: false,
+  });
+
+  const handleChange = (name) => (event) => {
+    setValues({ ...values, error: false, [name]: event.target.value });
+  };
+
   const signUpForm = () => {
     return (
       <form>
         <div className="form-group">
           <label className="text-muted">Name</label>
-          <input typr="text" className="form-control" />
+          <input
+            onChange={handleChange("name")}
+            type="text"
+            className="form-control"
+          />
         </div>
         <div className="form-group">
           <label className="text-muted">Email</label>
-          <input typr="email" className="form-control" />
+          <input
+            onChange={handleChange("email")}
+            type="email"
+            className="form-control"
+          />
         </div>
         <div className="form-group">
           <label className="text-muted">Password</label>
-          <input typr="password" className="form-control" />
+          <input
+            onChange={handleChange("password")}
+            type="password"
+            className="form-control"
+          />
         </div>
         <button className="btn btn-primary">Submit</button>
       </form>
@@ -30,6 +54,7 @@ const Signup = () => {
       className="container col-md-8 offset-md-2"
     >
       {signUpForm()}
+      {JSON.stringify(values)}
     </Layout>
   );
 };
