@@ -4,10 +4,20 @@ import { Link, withRouter } from "react-router-dom";
 const Menu = () => {
   return (
     <div>
-      <ul className="nav nav-tabs bg-primary">
+      <ul className="nav  nav-tabs bg-primary">
         <li className="nav-item">
           <Link className="nav-link" to="/">
             Home
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/signin">
+            SignIn
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/signup">
+            Signup
           </Link>
         </li>
       </ul>
@@ -15,4 +25,4 @@ const Menu = () => {
   );
 };
 
-export default Menu;
+export default withRouter(Menu);
