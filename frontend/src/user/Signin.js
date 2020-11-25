@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import Layout from "../core/Layout";
-import { Link, Redirect } from "react-router-dom";
-import { signin } from "../auth";
-import { API } from "../config";
+import { Redirect } from "react-router-dom";
+import { signin, authenticate } from "../auth";
 
 const Signin = () => {
   const [values, setValues] = useState({
@@ -23,13 +22,16 @@ const Signin = () => {
   const clickSubmit = (event) => {
     event.preventDefault();
     setValues({ ...values, error: false, loading: true });
+
     signin({ email, password }).then((data) => {
       if (data.error) {
         setValues({ ...values, error: data.error, loading: false });
       } else {
-        setValues({
-          ...values,
-          redirectToReferrer: true,
+        authenticate(data, () => {
+          setValues({
+            ...values,
+            redirectToReferrer: true,
+          });
         });
       }
     });
@@ -89,6 +91,7 @@ const Signin = () => {
       return <Redirect to="/" />;
     }
   };
+
   return (
     <Layout
       title="SignIN Page"
