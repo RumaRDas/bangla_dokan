@@ -25,7 +25,7 @@ const AddCategory = () => {
     //make request to api to create category
     createCategory(user._id, token, { name }).then((data) => {
       if (data.error) {
-        setError(data.error);
+        setError(true);
       } else {
         setError("");
         setSuccess(true);
@@ -44,6 +44,7 @@ const AddCategory = () => {
             onChange={handleChange}
             value={name}
             autoFocus
+            required
           />
         </div>
         <button className="btn btn-outline-primary">Creat Category</button>
@@ -59,10 +60,19 @@ const AddCategory = () => {
 
   const showError = () => {
     if (error) {
-      return <h3 className="text-danger">{name} should be unique</h3>;
+      return <h3 className="text-danger">Category should be unique</h3>;
     }
   };
 
+  const goBack = () => {
+    return (
+      <div className="mt-5">
+        <Link to="/admin/dashboard" className="text-warning">
+          Back to Dashboard
+        </Link>
+      </div>
+    );
+  };
   return (
     <Layout
       title="Add a new Category"
@@ -73,6 +83,7 @@ const AddCategory = () => {
           {showSuccess()}
           {showError()}
           {newCategoryForm()}
+          {goBack()}
         </div>
       </div>
     </Layout>
