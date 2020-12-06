@@ -5,8 +5,8 @@ import Card from "./Card";
 const Shop = () => {
   return (
     <Layout
-      title="Home Page"
-      description="Node React E-commerce App"
+      title="Shop Page"
+      description="Search and Find Products of your choices"
       className="container-fluid"
     >
       <div className="row">
