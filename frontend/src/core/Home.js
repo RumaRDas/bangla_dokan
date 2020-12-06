@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Layout from "./Layout";
 import { getProducts } from "./apicor";
+import Card from "./Card";
 
 const Home = () => {
   const [productsBySell, setProductsBySell] = useState([]);
@@ -11,7 +12,7 @@ const Home = () => {
   const loadProductsBySell = () => {
     getProducts("sold").then((data) => {
       if (data.error) {
-        setError(data.Error);
+        setError(data.error);
       } else {
         setProductsBySell(data);
       }
@@ -21,8 +22,9 @@ const Home = () => {
   //Finding products by new arrival
   const loadProductsByArrival = () => {
     getProducts("createdAt").then((data) => {
+      console.log(data);
       if (data.error) {
-        setError(data.Error);
+        setError(data.error);
       } else {
         setProductsByArrival(data);
       }
@@ -36,9 +38,15 @@ const Home = () => {
 
   return (
     <Layout title="Home Page" description="Node React E-commerce App">
-      {JSON.stringify(productsBySell)}
-      <hr />
-      {JSON.stringify(productsByArrival)}
+      <h2 className="mb-4">Best Sellers</h2>
+      {productsBySell.map((product, i) => {
+        return <Card key={i} product={product} />;
+      })}
+
+      <h2 className="mb-4">New Arrivals</h2>
+      {productsByArrival.map((product, i) => {
+        return <Card key={i} product={product} />;
+      })}
     </Layout>
   );
 };
