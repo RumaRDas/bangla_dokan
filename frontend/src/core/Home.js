@@ -38,15 +38,19 @@ const Home = () => {
 
   return (
     <Layout title="Home Page" description="Node React E-commerce App">
-      <h2 className="mb-4">Best Sellers</h2>
-      {productsBySell.map((product, i) => {
-        return <Card key={i} product={product} />;
-      })}
-
       <h2 className="mb-4">New Arrivals</h2>
-      {productsByArrival.map((product, i) => {
-        return <Card key={i} product={product} />;
-      })}
+      <div className="row">
+        {productsByArrival.map((product, i) => {
+          return <Card key={i} product={product} />;
+        })}
+      </div>
+      <h2 className="mb-4">Best Sellers</h2>
+      <div className="row">
+        {" "}
+        {productsBySell.map((product, i) => {
+          return <Card key={i} product={product} />;
+        })}
+      </div>
     </Layout>
   );
 };
