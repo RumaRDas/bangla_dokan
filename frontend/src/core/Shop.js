@@ -8,7 +8,12 @@ const Shop = () => {
       title="Home Page"
       description="Node React E-commerce App"
       className="container-fluid"
-    ></Layout>
+    >
+      <div className="row">
+        <div className="col-4">Left SideBar</div>
+        <div className="col-8">Right SideBar</div>
+      </div>
+    </Layout>
   );
 };
 
