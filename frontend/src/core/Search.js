@@ -52,6 +52,17 @@ const Search = () => {
     //
   };
 
+  const searchedProducts = (results = []) => {
+    //
+    return (
+      <div className="row">
+        {results.map((product, i) => {
+          return <Card key={i} product={product} />;
+        })}
+      </div>
+    );
+  };
+
   const searchFrom = () => {
     return (
       <form onSubmit={searchSubmit}>
@@ -85,10 +96,8 @@ const Search = () => {
   };
   return (
     <div className="row">
-      <div className="container mb-3">
-        {searchFrom()}
-        {JSON.stringify(results)}
-      </div>
+      <div className="container mb-3">{searchFrom()}</div>
+      <div className="container-fluid mb-3">{searchedProducts(results)}</div>
     </div>
   );
 };
