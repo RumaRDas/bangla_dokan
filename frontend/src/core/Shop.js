@@ -41,6 +41,7 @@ const Shop = () => {
 
   useEffect(() => {
     init();
+    loadFilteredResult(skip, limit, myFilters.filters);
   }, []);
 
   const handleFilters = (filters, filterBy) => {
