@@ -14,6 +14,7 @@ const Shop = () => {
   const [error, setError] = useState(false);
   const [limit, setLimit] = useState(6);
   const [skip, setSkip] = useState(0);
+  const [size, setSize] = useState(0);
   const [filteredResult, setFilteredResult] = useState([]);
 
   const init = () => {
@@ -34,11 +35,37 @@ const Shop = () => {
       if (data.error) {
         setError(data.error);
       } else {
-        setFilteredResult(data.data);
+        setFilteredResult([...filteredResult, ...data.data]);
+        setSize(data.size);
+        setSkip(0);
       }
     });
   };
 
+  //For loading more then 6 products
+  const loadMore = () => {
+    let toSkip = skip + limit;
+    getFilteredProducts(toSkip, limit, myFilters.filters).then((data) => {
+      if (data.error) {
+        setError(data.error);
+      } else {
+        setFilteredResult(data.data);
+        setSize(data.size);
+        setSkip(toSkip);
+      }
+    });
+  };
+
+  const loadMoreButton = () => {
+    return (
+      size > 0 &&
+      size >= limit && (
+        <button onClick={loadMore} className="btn btn-warning mb-5">
+          Load More
+        </button>
+      )
+    );
+  };
   useEffect(() => {
     init();
     loadFilteredResult(skip, limit, myFilters.filters);
@@ -98,6 +125,8 @@ const Shop = () => {
               return <Card key={i} product={product} />;
             })}
           </div>
+          <hr />
+          {loadMoreButton()}
         </div>
       </div>
     </Layout>
