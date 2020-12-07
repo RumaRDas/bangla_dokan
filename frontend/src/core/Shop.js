@@ -31,9 +31,23 @@ const Shop = () => {
     // console.log("Shop ", filters, filterBy);
     const newFilters = { ...myFilters };
     newFilters.filters[filterBy] = filters;
+    if (filterBy == "price") {
+      let priceValues = handlePrice(filters);
+      newFilters.filters[filterBy] = priceValues;
+    }
     setMyFilters(newFilters);
   };
-
+  //gatting price array from price id
+  const handlePrice = (value) => {
+    const data = prices;
+    let array = [];
+    for (let key in data) {
+      if (data[key]._id === parseInt(value)) {
+        array = data[key].array;
+      }
+    }
+    return array;
+  };
   return (
     <Layout
       title="Shop Page"
@@ -53,7 +67,7 @@ const Shop = () => {
           <div>
             <RadioBox
               prices={prices}
-              handleChange={(filters) => handleFilters(filters, "price")}
+              handleFilters={(filters) => handleFilters(filters, "price")}
             />
           </div>
         </div>
