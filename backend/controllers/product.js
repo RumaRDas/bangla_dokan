@@ -7,15 +7,17 @@ const product = require("../models/product");
 
 //Finding product by Id
 exports.productById = (req, res, next, id) => {
-  Product.findById(id).exec((err, product) => {
-    if (err || !product) {
-      return res.status(400).json({
-        error: "Product not found",
-      });
-    }
-    req.product = product;
-    next();
-  });
+  Product.findById(id)
+    .populate("category")
+    .exec((err, product) => {
+      if (err || !product) {
+        return res.status(400).json({
+          error: "Product not found",
+        });
+      }
+      req.product = product;
+      next();
+    });
 };
 
 // getting product by id getting all fields nt photo fields
