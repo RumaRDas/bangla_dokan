@@ -52,13 +52,25 @@ const Search = () => {
     //
   };
 
+  const searchMessage = (searched, results) => {
+    if (searched && results.length > 0) {
+      return `Found ${results.length} products`;
+    }
+    if (searched && results.length < 1) {
+      return `No products Found`;
+    }
+  };
+
   const searchedProducts = (results = []) => {
     //
     return (
-      <div className="row">
-        {results.map((product, i) => {
-          return <Card key={i} product={product} />;
-        })}
+      <div>
+        <h2 className="mt-4 mb-4">{searchMessage(searched, results)}</h2>
+        <div className="row">
+          {results.map((product, i) => {
+            return <Card key={i} product={product} />;
+          })}
+        </div>
       </div>
     );
   };
