@@ -28,7 +28,7 @@ const Product = (props) => {
   useEffect(() => {
     const productId = props.match.params.productId;
     loadSingleProduct(productId);
-  }, []);
+  }, [props]);
 
   return (
     <Layout
