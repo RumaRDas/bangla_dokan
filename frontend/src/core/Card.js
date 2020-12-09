@@ -4,7 +4,7 @@ import ShowImage from "./ShowImage";
 import moment from "moment";
 import { addItem } from "./cartHelpers";
 
-const Card = ({ product, showViewProductButton = true }) => {
+const Card = ({ product, showViewProductButton = true , showAddToCartButton=true) => {
   const [redirect, setRedirect] = useState(false);
   //substring(0,10) is function for showing limit text
 
