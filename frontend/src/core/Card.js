@@ -4,7 +4,11 @@ import ShowImage from "./ShowImage";
 import moment from "moment";
 import { addItem } from "./cartHelpers";
 
-const Card = ({ product, showViewProductButton = true , showAddToCartButton=true) => {
+const Card = ({
+  product,
+  showViewProductButton = true,
+  showAddToCartButton = true,
+}) => {
   const [redirect, setRedirect] = useState(false);
   //substring(0,10) is function for showing limit text
 
@@ -30,14 +34,16 @@ const Card = ({ product, showViewProductButton = true , showAddToCartButton=true
     }
   };
 
-  const showAddToCartBtn = () => {
+  const showAddToCartBtn = (showAddToCartButton) => {
     return (
-      <button
-        onClick={addToCart}
-        className="btn btn-outline-warning mt-2 mb-2 card-btn-1  "
-      >
-        Add to cart
-      </button>
+      showAddToCartButton && (
+        <button
+          onClick={addToCart}
+          className="btn btn-outline-warning mt-2 mb-2 card-btn-1  "
+        >
+          Add to cart
+        </button>
+      )
     );
   };
 
@@ -66,7 +72,7 @@ const Card = ({ product, showViewProductButton = true , showAddToCartButton=true
         {showStock(product.quantity)}
         <br />
         {showViewbutton(showViewProductButton)}
-        {showAddToCartBtn()}
+        {showAddToCartBtn(showAddToCartButton)}
       </div>
     </div>
   );

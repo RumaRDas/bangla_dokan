@@ -20,7 +20,15 @@ const Cart = () => {
         <h2>Your cart has {`${items.length}`} items</h2>
         <hr />
         {items.map((product, i) => {
-          return <Card key={i} product={product} setRun={setRun} run={run} />;
+          return (
+            <Card
+              key={i}
+              product={product}
+              setRun={setRun}
+              run={run}
+              showAddToCartButton={false}
+            />
+          );
         })}
       </div>
     );
