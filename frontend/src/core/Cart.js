@@ -22,6 +22,7 @@ const Cart = () => {
             key={i}
             product={product}
             showAddToCartButton={false}
+            showRemoveProductButton={true}
             cartUpdate={true}
             setRun={setRun}
             run={run}
