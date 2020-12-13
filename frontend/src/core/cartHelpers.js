@@ -1,4 +1,4 @@
-export const addItem = (item, next = (f) => f) => {
+export const addItem = (item, count = 0, next = (f) => f) => {
   let cart = [];
   if (typeof window !== "undefined") {
     if (localStorage.getItem("cart")) {
@@ -43,4 +43,21 @@ export const getCart = () => {
     }
   }
   return [];
+};
+
+export const updateItem = (productId, count) => {
+  let cart = [];
+  if (typeof window !== "undefined") {
+    if (localStorage.getItem("cart")) {
+      cart = JSON.parse(localStorage.getItem("cart"));
+    }
+
+    cart.map((product, i) => {
+      if (product._id === productId) {
+        cart[i].count = count;
+      }
+    });
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
 };

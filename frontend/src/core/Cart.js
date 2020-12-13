@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Layout from "./Layout";
-import { getCategories, getProducts } from "./apicor";
 import Card from "./Card";
-import Search from "./Search";
 import { getCart } from "./cartHelpers";
 import { Link } from "react-router-dom";
 
@@ -19,17 +17,16 @@ const Cart = () => {
       <div>
         <h2>Your cart has {`${items.length}`} items</h2>
         <hr />
-        {items.map((product, i) => {
-          return (
-            <Card
-              key={i}
-              product={product}
-              setRun={setRun}
-              run={run}
-              showAddToCartButton={false}
-            />
-          );
-        })}
+        {items.map((product, i) => (
+          <Card
+            key={i}
+            product={product}
+            showAddToCartButton={false}
+            cartUpdate={true}
+            setRun={setRun}
+            run={run}
+          />
+        ))}
       </div>
     );
   };
