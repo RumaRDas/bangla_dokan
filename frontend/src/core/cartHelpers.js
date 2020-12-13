@@ -61,3 +61,21 @@ export const updateItem = (productId, count) => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }
 };
+
+export const removeItem = (productId, count) => {
+  let cart = [];
+  if (typeof window !== "undefined") {
+    if (localStorage.getItem("cart")) {
+      cart = JSON.parse(localStorage.getItem("cart"));
+    }
+
+    cart.map((product, i) => {
+      if (product._id === productId) {
+        cart.splice(cart[i], 1);
+      }
+    });
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
+  return cart;
+};
