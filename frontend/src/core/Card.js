@@ -58,6 +58,7 @@ const Card = ({
         <button
           onClick={() => {
             removeItem(product._id);
+            setRun(!run);
           }}
           className="btn btn-outline-danger mt-2 mb-2 card-btn-1  "
         >
