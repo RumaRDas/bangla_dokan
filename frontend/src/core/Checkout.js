@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import Layout from "./Layout";
 import { getProducts, getBraintreeClientToken } from "./apicor";
 import Card from "./Card";
-import Search from "./Search";
+
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
+
+import DropIn from "braintree-web-drop-in-react";
 
 const Checkout = ({ products }) => {
   const [data, setData] = useState({
@@ -42,11 +44,30 @@ const Checkout = ({ products }) => {
 
   const showCheckout = () => {
     return isAuthenticated() ? (
-      <button className="btn btn-success">Checkout</button>
+      <div>{showDropIn()}</div>
     ) : (
       <Link to="/signin">
         <button className="btn btn-primary">Sign in to Checkout</button>
       </Link>
+    );
+  };
+
+  //only show drop in when token is there
+  const showDropIn = () => {
+    return (
+      <div>
+        {data.clientToken !== null && products.length > 0 ? (
+          <div>
+            <DropIn
+              options={{
+                authorization: data.clientToken,
+              }}
+              onInstance={(instance) => (data.instance = instance)}
+            />
+            <button className="btn btn-success">Checkout</button>
+          </div>
+        ) : null}
+      </div>
     );
   };
 
