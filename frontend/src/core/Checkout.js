@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Layout from "./Layout";
-import { getProducts, getBraintreeClientToken } from "./apicor";
+import { getProducts, getBraintreeClientToken, processPayment } from "./apicor";
 import Card from "./Card";
 
 import { isAuthenticated } from "../auth";
@@ -25,13 +25,14 @@ const Checkout = ({ products }) => {
   const getToken = (userId, token) => {
     getBraintreeClientToken(userId, token).then((data) => {
       if (data.error) {
+        console.log(data.error);
         setData({ ...data, error: data.error });
       } else {
-        setData({ ...data, clientToken: data.clientToken });
+        console.log(data);
+        setData({ clientToken: data.clientToken });
       }
     });
   };
-
   useEffect(() => {
     getToken(userId, token);
   }, []);
@@ -63,14 +64,25 @@ const Checkout = ({ products }) => {
         nonce = data.nonce;
         //once you have nonce (card type, card number) send nonce as 'paymentMethod'to backend
         //and also total to be charged
-        console.log(
-          "send nonce and total to process: ",
-          nonce,
-          getTotal(products)
-        );
+        // console.log(
+        //   "send nonce and total to process: ",
+        //   nonce,
+        //   getTotal(products)
+        // );
+        const paymentData = {
+          paymentMethodNonce: nonce,
+          amount: getTotal(products),
+        };
+        processPayment(userId, token, paymentData)
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       })
       .catch((error) => {
-        console.log("dropin error: ", error);
+        // console.log("dropin error: ", error);
         setData({ ...data, error: error.message });
       });
   };
@@ -91,7 +103,7 @@ const Checkout = ({ products }) => {
               }}
               onInstance={(instance) => (data.instance = instance)}
             />
-            <button className="btn btn-success" onClick={buy}>
+            <button className="btn btn-success btn-block" onClick={buy}>
               Pay
             </button>
           </div>
