@@ -76,6 +76,9 @@ const Checkout = ({ products }) => {
         processPayment(userId, token, paymentData)
           .then((response) => {
             console.log(response);
+            setData({ ...data, success: true });
+            //empty cart
+            // create order
           })
           .catch((error) => {
             console.log(error);
@@ -123,9 +126,21 @@ const Checkout = ({ products }) => {
     );
   };
 
+  const showSuccess = (success) => {
+    return (
+      <div
+        className="alert alert-success"
+        style={{ display: success ? "" : "none" }}
+      >
+        Thanks Your payment was successful
+      </div>
+    );
+  };
+
   return (
     <div>
       <h2> Total: ${getTotal()}</h2>
+      {showSuccess(data.success)}
       {showError(data.error)}
       {showCheckout()}
     </div>
