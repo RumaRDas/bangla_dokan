@@ -51,6 +51,29 @@ const Checkout = ({ products }) => {
       </Link>
     );
   };
+  //when click pay
+  const buy = () => {
+    //send the nonce  to your server
+    //nonce= data.instance.requestPaymentMethod()
+    let nonce;
+    let getNonce = data.instance
+      .requestPaymentMethod()
+      .then((data) => {
+        console.log(data);
+        nonce = data.nonce;
+        //once you have nonce (card type, card number) send nonce as 'paymentMethod'to backend
+        //and also total to be charged
+        console.log(
+          "send nonce and total to process: ",
+          nonce,
+          getTotal(products)
+        );
+      })
+      .catch((error) => {
+        console.log("dropin error: ", error);
+        setData({ ...data, error: error.message });
+      });
+  };
 
   //only show drop in when token is there
   const showDropIn = () => {
@@ -64,7 +87,9 @@ const Checkout = ({ products }) => {
               }}
               onInstance={(instance) => (data.instance = instance)}
             />
-            <button className="btn btn-success">Checkout</button>
+            <button className="btn btn-success" onClick={buy}>
+              Pay
+            </button>
           </div>
         ) : null}
       </div>
