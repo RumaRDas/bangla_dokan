@@ -78,7 +78,11 @@ const Checkout = ({ products }) => {
   //only show drop in when token is there
   const showDropIn = () => {
     return (
-      <div>
+      <div
+        onBlur={() => {
+          setData({ ...data, error: "" });
+        }}
+      >
         {data.clientToken !== null && products.length > 0 ? (
           <div>
             <DropIn
