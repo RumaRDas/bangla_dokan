@@ -96,9 +96,21 @@ const Checkout = ({ products }) => {
     );
   };
 
+  const showError = (error) => {
+    return (
+      <div
+        className="alert alert-danger"
+        style={{ display: error ? "" : "none" }}
+      >
+        {error}
+      </div>
+    );
+  };
+
   return (
     <div>
       <h2> Total: ${getTotal()}</h2>
+      {showError(data.error)}
       {showCheckout()}
     </div>
   );
