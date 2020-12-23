@@ -34,10 +34,12 @@ const Cart = () => {
   };
 
   const noItemsMessage = () => {
-    <h2>
-      Your cart is empty
-      <br /> <Link to="/shop"> Continue Shopping</Link>
-    </h2>;
+    return (
+      <h2>
+        Your cart is empty
+        <br /> <Link to="/shop"> Continue Shopping</Link>
+      </h2>
+    );
   };
   return (
     <Layout
@@ -52,7 +54,7 @@ const Cart = () => {
         <div className="col-6">
           <h2 className="mb-4">Your cart summary </h2>
           <hr />
-          <Checkout products={items} />
+          <Checkout products={items} setRun={setRun} run={run} />
         </div>
       </div>
     </Layout>

@@ -5,11 +5,12 @@ import Card from "./Card";
 
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
-
+import { emptyCart } from "./cartHelpers";
 import DropIn from "braintree-web-drop-in-react";
 
-const Checkout = ({ products }) => {
+const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
   const [data, setData] = useState({
+    loading: false,
     success: false,
     clientToken: null,
     error: "",
@@ -54,6 +55,7 @@ const Checkout = ({ products }) => {
   };
   //when click pay
   const buy = () => {
+    setData({ loading: true });
     //send the nonce  to your server
     //nonce= data.instance.requestPaymentMethod()
     let nonce;
@@ -75,13 +77,19 @@ const Checkout = ({ products }) => {
         };
         processPayment(userId, token, paymentData)
           .then((response) => {
-            console.log(response);
-            setData({ ...data, success: true });
+            //  console.log(response);
+
+            emptyCart(() => {
+              setRun(!run);
+              console.log("payment success and empty cart");
+              setData({ success: true, loading: false });
+            });
             //empty cart
             // create order
           })
           .catch((error) => {
             console.log(error);
+            setData({ loading: false });
           });
       })
       .catch((error) => {
@@ -103,6 +111,9 @@ const Checkout = ({ products }) => {
             <DropIn
               options={{
                 authorization: data.clientToken,
+                paypal: {
+                  flow: "vault",
+                },
               }}
               onInstance={(instance) => (data.instance = instance)}
             />
@@ -137,9 +148,14 @@ const Checkout = ({ products }) => {
     );
   };
 
+  const showLOading = (loading) => {
+    loading && <h2>LOading...</h2>;
+  };
+
   return (
     <div>
       <h2> Total: ${getTotal()}</h2>
+      {showLOading(data.loading)}
       {showSuccess(data.success)}
       {showError(data.error)}
       {showCheckout()}
