@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Layout from "./Layout";
-import { getProducts, getBraintreeClientToken, processPayment } from "./apicor";
+import {
+  getProducts,
+  getBraintreeClientToken,
+  processPayment,
+  createOrder,
+} from "./apicor";
 import Card from "./Card";
 
 import { isAuthenticated } from "../auth";
@@ -38,6 +43,10 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
     getToken(userId, token);
   }, []);
 
+  const handleAddress = (event) => {
+    setData({ ...data, address: event.target.value });
+  };
+
   const getTotal = () => {
     return products.reduce((currentValue, nextValue) => {
       return currentValue + nextValue.count * nextValue.price;
@@ -53,6 +62,8 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
       </Link>
     );
   };
+
+  let deliveryAddress = data.address;
   //when click pay
   const buy = () => {
     setData({ loading: true });
@@ -78,14 +89,20 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
         processPayment(userId, token, paymentData)
           .then((response) => {
             //  console.log(response);
-
+            const createOrderData = {
+              products: products,
+              transaction_id: response.transaction_id,
+              amount: response.transaction.amount,
+              address: data.address,
+            };
+            //empty cart
+            // create order
+            createOrder(userId, token, createOrderData);
             emptyCart(() => {
               setRun(!run);
               console.log("payment success and empty cart");
               setData({ success: true, loading: false });
             });
-            //empty cart
-            // create order
           })
           .catch((error) => {
             console.log(error);
@@ -108,6 +125,15 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
       >
         {data.clientToken !== null && products.length > 0 ? (
           <div>
+            <div className="gorm-group mb-3">
+              <label className="text-mutes">Delivery address:</label>
+              <textarea
+                onChange={handleAddress}
+                className="form-control"
+                value={data.address}
+                placeholder="Tye your delevery address Her...."
+              />
+            </div>
             <DropIn
               options={{
                 authorization: data.clientToken,
