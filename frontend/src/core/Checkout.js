@@ -91,9 +91,9 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
             //  console.log(response);
             const createOrderData = {
               products: products,
-              transaction_id: response.transaction_id,
+              transaction_id: response.transaction.id,
               amount: response.transaction.amount,
-              address: data.address,
+              address: deliveryAddress,
             };
             //empty cart
             // create order
