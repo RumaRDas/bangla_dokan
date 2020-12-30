@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const { ObjectId } = mongoose.Schema;
 
-const CartItemSchems = new mongoose.Schema(
+const CartItemSchema = new mongoose.Schema(
   {
     product: { type: ObjectId, ref: "Product" },
     name: String,
@@ -12,24 +12,31 @@ const CartItemSchems = new mongoose.Schema(
   { timestamps: true }
 );
 
-const CartItem = mongoose.model("CartItem", CartItemSchems);
+const CartItem = mongoose.model("CartItem", CartItemSchema);
 
-const OrderSchema = new.mongoose.Schema(
+const OrderSchema = new mongoose.Schema(
   {
-    products: [CartItemSchems],
+    products: [CartItemSchema],
     transaction_id: {},
     amount: { type: Number },
     address: String,
     status: {
       type: String,
       default: "Not processed",
-      enmu: ["Not Processed", "Processing", "Shipped", "Delivered"],
+      enum: [
+        "Not processed",
+        "Processing",
+        "Shipped",
+        "Delivered",
+        "Cancelled",
+      ], // enum means string objects
     },
-    update: Date,
+    updated: Date,
     user: { type: ObjectId, ref: "User" },
   },
   { timestamps: true }
 );
 
 const Order = mongoose.model("Order", OrderSchema);
+
 module.exports = { Order, CartItem };
