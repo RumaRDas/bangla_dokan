@@ -23,8 +23,14 @@ const Orders = () => {
     loadOrders();
   }, []);
 
-  const noOrders = (orders) => {
-    return orders.length < 1 ? <h4>No orders</h4> : null;
+  const showOrdersLength = () => {
+    if (orders.length > 0) {
+      return (
+        <h1 className="text-danger display-2"> Total Orders:{orders.length}</h1>
+      );
+    } else {
+      return <h1 className="text-danger display-2"> NO Orders</h1>;
+    }
   };
 
   return (
@@ -34,7 +40,7 @@ const Orders = () => {
     >
       <div className="row">
         <div className="col-md-8 offset-md-2">
-          {noOrders(orders)}
+          {showOrdersLength()}
           {JSON.stringify(orders)}
         </div>
       </div>
