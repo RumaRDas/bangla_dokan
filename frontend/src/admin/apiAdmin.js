@@ -128,7 +128,7 @@ export const deleteProduct = (productId, userId, token) => {
 };
 
 export const getProduct = (productId) => {
-  return fetch(`${API}/product/${productId}?`, {
+  return fetch(`${API}/product/${productId}`, {
     method: "GET",
   })
     .then((response) => {
@@ -142,7 +142,6 @@ export const updateProduct = (productId, userId, token, product) => {
     method: "PUT",
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
     body: product, //This is not a json data its a form data

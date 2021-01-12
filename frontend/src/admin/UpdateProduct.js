@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { getCategories, getProduct, updateProduct } from "./apiAdmin";
 
 const UpdateProduct = ({ match }) => {
+  const [categories, setCategories] = useState([]);
   const [values, setValues] = useState({
     name: "",
     description: "",
@@ -26,7 +27,7 @@ const UpdateProduct = ({ match }) => {
     name,
     description,
     price,
-    categories,
+    //categories,
     category,
     shipping,
     quantity,
@@ -176,7 +177,7 @@ const UpdateProduct = ({ match }) => {
             <option value="1">Yes</option>
           </select>
         </div>
-        <button className="btn btn-outline-info">Create Product</button>
+        <button className="btn btn-outline-info">Update Product</button>
       </form>
     );
   };
@@ -198,7 +199,7 @@ const UpdateProduct = ({ match }) => {
         className="alert alert-info"
         style={{ display: createdProduct ? "" : "none" }}
       >
-        <h2>{`${createdProduct}`} is created!</h2>
+        <h2>{`${createdProduct}`} is Updated!</h2>
       </div>
     );
   };
@@ -213,10 +214,18 @@ const UpdateProduct = ({ match }) => {
     );
   };
 
+  const reduirectUser = () => {
+    if (redirectToProfile) {
+      if (!error) {
+        return <Redirect to="/" />;
+      }
+    }
+  };
+
   return (
     <Layout
-      title="Add a new Product"
-      description={`G'Day ${user.name}, ready to add a new Product`}
+      title="Update Product"
+      description={`G'Day ${user.name}, ready to update aProduct`}
     >
       <div className="row">
         <div className="col-md-8 offset-md-2">
@@ -224,6 +233,7 @@ const UpdateProduct = ({ match }) => {
           {showSuccess()}
           {showError()}
           {newPostForm()}
+          {reduirectUser()}
         </div>
       </div>
     </Layout>
