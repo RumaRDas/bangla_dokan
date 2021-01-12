@@ -93,3 +93,21 @@ export const updateOrderStatus = (userId, token, orderId, status) => {
     })
     .catch((err) => console.log(err));
 };
+
+/**
+ * to perform curd on product
+ * get all products
+ * get a single product
+ * update a single product
+ * delete single product
+ */
+
+export const getProducts = () => {
+  return fetch(`${API}/products`, {
+    method: "GET",
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
