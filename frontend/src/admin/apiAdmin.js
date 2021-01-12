@@ -136,3 +136,19 @@ export const getProduct = (productId) => {
     })
     .catch((err) => console.log(err));
 };
+
+export const updateProduct = (productId, userId, token, product) => {
+  return fetch(`${API}/product/${productId}/${userId}`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: product, //This is not a json data its a form data
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
