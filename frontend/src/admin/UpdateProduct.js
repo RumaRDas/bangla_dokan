@@ -16,7 +16,7 @@ const UpdateProduct = ({ match }) => {
     quantity: "",
     photo: "",
     loading: false,
-    error: "",
+    error: false,
     createdProduct: "",
     redirectToProfile: false,
     formData: "",
@@ -99,6 +99,8 @@ const UpdateProduct = ({ match }) => {
             price: "",
             quantity: "",
             loading: false,
+            error: false,
+            redirectToProfile: true,
             createdProduct: data.result.name,
           });
         }
