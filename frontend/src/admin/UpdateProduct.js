@@ -2,14 +2,9 @@ import React, { useState, useEffect } from "react";
 import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
-import {
-  createProduct,
-  getCategories,
-  getProduct,
-  updateProduct,
-} from "./apiAdmin";
+import { getCategories, getProduct, updateProduct } from "./apiAdmin";
 
-const UpdateProduct = () => {
+const UpdateProduct = ({ match }) => {
   const [values, setValues] = useState({
     name: "",
     description: "",
@@ -42,19 +37,41 @@ const UpdateProduct = () => {
     formData,
   } = values;
 
+  const init = (productId) => {
+    getProduct(productId).then((data) => {
+      if (data.error) {
+        setValues({ ...values, error: data.error });
+      } else {
+        //populate the state
+        setValues({
+          ...values,
+          name: data.name,
+          description: data.description,
+          price: data.price,
+          category: data.category._id,
+          shipping: data.shipping,
+          quantity: data.quantity,
+          formData: new FormData(),
+        });
+        //load Categories
+        initCategories();
+      }
+    });
+  };
+
   //Load categories and set form data
-  const init = () => {
+  const initCategories = () => {
     getCategories().then((data) => {
       if (data.error) {
         setValues({ ...values, error: data.error });
       } else {
-        setValues({ ...values, categories: data, formData: new FormData() });
+        setValues({ categories: data, formData: new FormData() });
       }
     });
   };
 
   useEffect(() => {
-    init();
+    init(match.params.productId);
   }, []);
 
   const handleChange = (name) => (event) => {
@@ -68,22 +85,24 @@ const UpdateProduct = () => {
     event.preventDefault();
     setValues({ ...values, error: "", loading: true });
 
-    createProduct(user._id, token, formData).then((data) => {
-      if (data.error) {
-        setValues({ ...values, error: data.error });
-      } else {
-        setValues({
-          ...values,
-          name: "",
-          description: "",
-          photo: "",
-          price: "",
-          quantity: "",
-          loading: false,
-          createdProduct: data.result.name,
-        });
+    updateProduct(match.params.productId, user._id, token, formData).then(
+      (data) => {
+        if (data.error) {
+          setValues({ ...values, error: data.error });
+        } else {
+          setValues({
+            ...values,
+            name: "",
+            description: "",
+            photo: "",
+            price: "",
+            quantity: "",
+            loading: false,
+            createdProduct: data.result.name,
+          });
+        }
       }
-    });
+    );
   };
 
   const newPostForm = () => {
