@@ -41,6 +41,8 @@ const ManageProducts = () => {
     >
       <div classnName="row">
         <div className="col-12">
+          <h2 className="text-center">Total {products.length}</h2>
+          <hr />
           <ul className="list-group">
             {products.map((p, i) => {
               return (
